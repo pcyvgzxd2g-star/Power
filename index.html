@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>圣诞树动画</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+        }
+
+        #main {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #video1 {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #startButton {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 15px 30px;
+            font-size: 18px;
+            color: #fff;
+            background: #e63946;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        #startButton:hover {
+            background: #c1121f;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        #startButton:active {
+            transform: translate(-50%, -50%) scale(0.95);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            text-align: center;
+        }
+
+        #toggleMusic {
+            padding: 10px 20px;
+            font-size: 14px;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.7);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+
+<body id="app">
+    <div id="main">
+        <video id="video1" muted="muted" loop="loop" src="./video/chrismas.mp4">
+        </video>
+        <audio id="music1" loop="loop" preload="auto">
+            <source src="./music/1.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <button id="startButton">点击播放圣诞树动画</button>
+
+    <div class="controls hidden">
+        <button id="toggleMusic">关闭音乐</button>
+    </div>
+
+    <script type="text/javascript">
+        var video = document.getElementById("video1");
+        var music = document.getElementById("music1");
+        var startButton = document.getElementById("startButton");
+        var toggleMusic = document.getElementById("toggleMusic");
+        var controls = document.querySelector('.controls');
+        var app = document.getElementById("app");
+        var isMusicPlaying = false;
+
+        // 设置视频播放速度
+        video.playbackRate = 0.8;
+
+        // 点击播放按钮开始动画
+        startButton.addEventListener('click', function() {
+            video.play();
+            music.play();
+            isMusicPlaying = true;
+            startButton.classList.add('hidden');
+            controls.classList.remove('hidden');
+        });
+
+        // 音乐开关控制
+        toggleMusic.addEventListener('click', function() {
+            if (isMusicPlaying) {
+                music.pause();
+                toggleMusic.textContent = '开启音乐';
+            } else {
+                music.play();
+                toggleMusic.textContent = '关闭音乐';
+            }
+            isMusicPlaying = !isMusicPlaying;
+        });
+
+        // 触摸事件支持（移动端）
+        app.addEventListener('touchstart', function() {
+            if (startButton.classList.contains('hidden')) {
+                if (!isMusicPlaying) {
+                    music.play();
+                    isMusicPlaying = true;
+                    toggleMusic.textContent = '关闭音乐';
+                }
+            }
+        }, true);
+    </script>
+</body>
+</html>
