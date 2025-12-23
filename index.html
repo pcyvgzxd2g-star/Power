@@ -3,71 +3,246 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>圣诞树动画</title>
+    <title>CSS圣诞树动画</title>
     <style>
-        html,
-        body {
+        html, body {
             margin: 0;
+            padding: 0;
             width: 100%;
             height: 100%;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
             overflow: hidden;
-            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
         }
 
-        #main {
-            position: fixed;
-            top: 0;
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding-bottom: 50px;
+        }
+
+        /* 圣诞树 */
+        .christmas-tree {
+            position: relative;
+            width: 300px;
+            height: 400px;
+            transform-origin: bottom center;
+            animation: sway 3s ease-in-out infinite alternate;
+        }
+
+        /* 树的主体部分 */
+        .tree-layer {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-bottom: 200px solid #2d5016;
+            left: 0;
+            opacity: 0.9;
+        }
+
+        .tree-layer:nth-child(1) {
+            bottom: 150px;
+            border-bottom-color: #3a6a1e;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .tree-layer:nth-child(2) {
+            bottom: 100px;
+            border-bottom-color: #2d5016;
+            border-left-width: 120px;
+            border-right-width: 120px;
+            border-bottom-width: 160px;
+            left: 30px;
+            animation: glow 2.5s ease-in-out infinite alternate;
+        }
+
+        .tree-layer:nth-child(3) {
+            bottom: 50px;
+            border-bottom-color: #3a6a1e;
+            border-left-width: 90px;
+            border-right-width: 90px;
+            border-bottom-width: 120px;
+            left: 60px;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        /* 树干 */
+        .tree-trunk {
+            position: absolute;
+            bottom: 0;
+            left: 130px;
+            width: 40px;
+            height: 80px;
+            background: #654321;
+            border-radius: 5px;
+        }
+
+        /* 装饰球 */
+        .ornament {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            animation: blink 2s ease-in-out infinite alternate;
+        }
+
+        .ornament.red {
+            background: #ff4444;
+            box-shadow: 0 0 10px #ff4444;
+        }
+
+        .ornament.blue {
+            background: #4444ff;
+            box-shadow: 0 0 10px #4444ff;
+        }
+
+        .ornament.yellow {
+            background: #ffff44;
+            box-shadow: 0 0 10px #ffff44;
+        }
+
+        .ornament.purple {
+            background: #ff44ff;
+            box-shadow: 0 0 10px #ff44ff;
+        }
+
+        /* 装饰球位置 */
+        .ornament:nth-child(4) { top: 100px; left: 100px; animation-delay: 0s; }
+        .ornament:nth-child(5) { top: 150px; left: 200px; animation-delay: 0.3s; }
+        .ornament:nth-child(6) { top: 200px; left: 120px; animation-delay: 0.6s; }
+        .ornament:nth-child(7) { top: 250px; left: 180px; animation-delay: 0.9s; }
+        .ornament:nth-child(8) { top: 120px; left: 150px; animation-delay: 1.2s; }
+        .ornament:nth-child(9) { top: 180px; left: 160px; animation-delay: 1.5s; }
+        .ornament:nth-child(10) { top: 220px; left: 140px; animation-delay: 1.8s; }
+
+        /* 树顶星星 */
+        .star {
+            position: absolute;
+            top: 30px;
+            left: 130px;
+            width: 40px;
+            height: 40px;
+            background: #ffd700;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: star-glow 1.5s ease-in-out infinite alternate;
+            transform-origin: center;
+            animation: rotate 10s linear infinite;
+        }
+
+        /* 雪花 */
+        .snowflake {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+
+        /* 礼物盒 */
+        .gift {
+            position: absolute;
+            bottom: 20px;
+            width: 40px;
+            height: 30px;
+            border-radius: 3px;
+            animation: bounce 2s ease-in-out infinite alternate;
+        }
+
+        .gift.red {
+            background: #ff4444;
+            left: 80px;
+        }
+
+        .gift.green {
+            background: #44ff44;
+            left: 130px;
+            animation-delay: 0.5s;
+        }
+
+        .gift.blue {
+            background: #4444ff;
+            left: 180px;
+            animation-delay: 1s;
+        }
+
+        .gift-ribbon {
+            position: absolute;
+            background: white;
+        }
+
+        .gift-ribbon.horizontal {
+            top: 12px;
             left: 0;
             width: 100%;
+            height: 6px;
+        }
+
+        .gift-ribbon.vertical {
+            left: 17px;
+            top: 0;
+            width: 6px;
             height: 100%;
         }
 
-        #video1 {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        /* 动画效果 */
+        @keyframes sway {
+            0% { transform: rotate(-2deg); }
+            100% { transform: rotate(2deg); }
         }
 
-        #startButton {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 15px 30px;
-            font-size: 18px;
-            color: #fff;
-            background: #e63946;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            z-index: 1000;
-            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.5);
-            transition: all 0.3s ease;
+        @keyframes glow {
+            0% { filter: brightness(1); }
+            100% { filter: brightness(1.3); }
         }
 
-        #startButton:hover {
-            background: #c1121f;
-            transform: translate(-50%, -50%) scale(1.1);
+        @keyframes blink {
+            0% { opacity: 0.7; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.2); }
         }
 
-        #startButton:active {
-            transform: translate(-50%, -50%) scale(0.95);
+        @keyframes star-glow {
+            0% { box-shadow: 0 0 10px #ffd700; }
+            100% { box-shadow: 0 0 20px #ffd700, 0 0 30px #ffd700; }
         }
 
-        .hidden {
-            display: none;
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-5px); }
+        }
+
+        /* 控制按钮 */
         .controls {
             position: fixed;
-            bottom: 20px;
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
             text-align: center;
         }
 
-        #toggleMusic {
+        button {
             padding: 10px 20px;
             font-size: 14px;
             color: #fff;
@@ -77,46 +252,131 @@
             cursor: pointer;
             margin: 0 10px;
         }
+
+        /* 响应式设计 */
+        @media (max-width: 600px) {
+            .christmas-tree {
+                width: 200px;
+                height: 300px;
+            }
+
+            .tree-layer {
+                border-left-width: 100px;
+                border-right-width: 100px;
+                border-bottom-width: 130px;
+            }
+
+            .tree-layer:nth-child(2) {
+                border-left-width: 80px;
+                border-right-width: 80px;
+                border-bottom-width: 100px;
+                left: 20px;
+            }
+
+            .tree-layer:nth-child(3) {
+                border-left-width: 60px;
+                border-right-width: 60px;
+                border-bottom-width: 80px;
+                left: 40px;
+            }
+
+            .tree-trunk {
+                left: 80px;
+                width: 30px;
+                height: 60px;
+            }
+
+            .star {
+                left: 80px;
+                width: 30px;
+                height: 30px;
+            }
+
+            .ornament {
+                width: 15px;
+                height: 15px;
+            }
+
+            .ornament:nth-child(4) { top: 80px; left: 60px; }
+            .ornament:nth-child(5) { top: 120px; left: 140px; }
+            .ornament:nth-child(6) { top: 160px; left: 80px; }
+            .ornament:nth-child(7) { top: 200px; left: 120px; }
+            .ornament:nth-child(8) { top: 90px; left: 100px; }
+            .ornament:nth-child(9) { top: 140px; left: 100px; }
+            .ornament:nth-child(10) { top: 180px; left: 100px; }
+
+            .gift {
+                width: 30px;
+                height: 20px;
+            }
+
+            .gift.red { left: 50px; }
+            .gift.green { left: 85px; }
+            .gift.blue { left: 120px; }
+        }
     </style>
 </head>
-
-<body id="app">
-    <div id="main">
-        <video id="video1" muted="muted" loop="loop" src="./video/chrismas.mp4">
-        </video>
-        <audio id="music1" loop="loop" preload="auto">
-            <source src="./music/1.mp3" type="audio/mpeg">
-        </audio>
-    </div>
-
-    <button id="startButton">点击播放圣诞树动画</button>
-
-    <div class="controls hidden">
+<body>
+    <div class="controls">
+        <button id="toggleSnow">关闭雪花</button>
         <button id="toggleMusic">关闭音乐</button>
     </div>
 
-    <script type="text/javascript">
-        var video = document.getElementById("video1");
-        var music = document.getElementById("music1");
-        var startButton = document.getElementById("startButton");
-        var toggleMusic = document.getElementById("toggleMusic");
-        var controls = document.querySelector('.controls');
-        var app = document.getElementById("app");
-        var isMusicPlaying = false;
+    <div class="container">
+        <div class="christmas-tree">
+            <div class="tree-layer"></div>
+            <div class="tree-layer"></div>
+            <div class="tree-layer"></div>
+            <div class="tree-trunk"></div>
+            <div class="ornament red"></div>
+            <div class="ornament blue"></div>
+            <div class="ornament yellow"></div>
+            <div class="ornament purple"></div>
+            <div class="ornament red"></div>
+            <div class="ornament blue"></div>
+            <div class="ornament yellow"></div>
+            <div class="star"></div>
+        </div>
+        
+        <div class="gift red">
+            <div class="gift-ribbon horizontal"></div>
+            <div class="gift-ribbon vertical"></div>
+        </div>
+        <div class="gift green">
+            <div class="gift-ribbon horizontal"></div>
+            <div class="gift-ribbon vertical"></div>
+        </div>
+        <div class="gift blue">
+            <div class="gift-ribbon horizontal"></div>
+            <div class="gift-ribbon vertical"></div>
+        </div>
+    </div>
 
-        // 设置视频播放速度
-        video.playbackRate = 0.8;
+    <audio id="music" loop="loop" preload="auto">
+        <source src="./music/1.mp3" type="audio/mpeg">
+    </audio>
 
-        // 点击播放按钮开始动画
-        startButton.addEventListener('click', function() {
-            video.play();
-            music.play();
-            isMusicPlaying = true;
-            startButton.classList.add('hidden');
-            controls.classList.remove('hidden');
-        });
+    <script>
+        // 创建雪花
+        function createSnowflakes() {
+            const container = document.querySelector('.container');
+            const snowflakeCount = 100;
 
-        // 音乐开关控制
+            for (let i = 0; i < snowflakeCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                snowflake.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(snowflake);
+            }
+        }
+
+        // 控制音乐
+        const music = document.getElementById('music');
+        const toggleMusic = document.getElementById('toggleMusic');
+        let isMusicPlaying = false;
+
         toggleMusic.addEventListener('click', function() {
             if (isMusicPlaying) {
                 music.pause();
@@ -128,16 +388,47 @@
             isMusicPlaying = !isMusicPlaying;
         });
 
-        // 触摸事件支持（移动端）
-        app.addEventListener('touchstart', function() {
-            if (startButton.classList.contains('hidden')) {
+        // 控制雪花
+        const toggleSnow = document.getElementById('toggleSnow');
+        let isSnowing = true;
+
+        toggleSnow.addEventListener('click', function() {
+            const snowflakes = document.querySelectorAll('.snowflake');
+            if (isSnowing) {
+                snowflakes.forEach(snowflake => {
+                    snowflake.style.display = 'none';
+                });
+                toggleSnow.textContent = '开启雪花';
+            } else {
+                snowflakes.forEach(snowflake => {
+                    snowflake.style.display = 'block';
+                });
+                toggleSnow.textContent = '关闭雪花';
+            }
+            isSnowing = !isSnowing;
+        });
+
+        // 初始化
+        window.addEventListener('load', function() {
+            createSnowflakes();
+            // 点击页面任意位置播放音乐
+            document.body.addEventListener('click', function() {
                 if (!isMusicPlaying) {
                     music.play();
                     isMusicPlaying = true;
                     toggleMusic.textContent = '关闭音乐';
                 }
+            });
+        });
+
+        // 触摸支持
+        document.body.addEventListener('touchstart', function() {
+            if (!isMusicPlaying) {
+                music.play();
+                isMusicPlaying = true;
+                toggleMusic.textContent = '关闭音乐';
             }
-        }, true);
+        });
     </script>
 </body>
 </html>
